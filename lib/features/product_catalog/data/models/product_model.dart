@@ -22,4 +22,15 @@ class ProductModel extends ProductEntity {
           : 'https://via.placeholder.com/150',
     );
   }
+  
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'price': price,
+      'category': category,
+      'images': [imageUrl],
+    };
+  }
 }

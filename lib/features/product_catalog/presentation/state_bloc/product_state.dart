@@ -8,13 +8,31 @@ abstract class ProductState extends Equatable {
 }
 
 class ProductInitial extends ProductState {}
+
 class ProductLoading extends ProductState {}
+
 class ProductLoaded extends ProductState {
-  final List<ProductEntity> products;
-  const ProductLoaded(this.products);
+  final List<ProductEntity> allProducts;
+  final List<ProductEntity> filteredProducts;
+  final String selectedCategory;
+  final String searchQuery; // <-- Simpan query pencarian aktif
+
+  const ProductLoaded({
+    required this.allProducts,
+    required this.filteredProducts,
+    this.selectedCategory = 'Semua',
+    this.searchQuery = '',
+  });
+
   @override
-  List<Object?> get props => [products];
+  List<Object?> get props => [
+    allProducts,
+    filteredProducts,
+    selectedCategory,
+    searchQuery,
+  ];
 }
+
 class ProductErrorState extends ProductState {
   final String message;
   const ProductErrorState(this.message);
