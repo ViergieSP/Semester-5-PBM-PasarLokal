@@ -5,16 +5,21 @@ class CategoryChipWidget extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
+  final Color? activeColor;
 
   const CategoryChipWidget({
     super.key,
     required this.label,
     required this.isSelected,
     required this.onTap,
+    this.activeColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    // Jika activeColor tidak diisi, otomatis pakai warna hijau bawaan
+    final themeColor = activeColor ?? AppColors.primary;
+
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: InkWell(
@@ -24,16 +29,16 @@ class CategoryChipWidget extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : Colors.white,
+            color: isSelected ? themeColor : Colors.white,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: isSelected ? AppColors.primary : AppColors.cardBorder,
+              color: isSelected ? themeColor : const Color(0xFFE2E8F0),
               width: 1,
             ),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(0.25),
+                      color: themeColor.withOpacity(0.25),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),

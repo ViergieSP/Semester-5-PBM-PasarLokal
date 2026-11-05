@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // Digunakan saat useRiverpod = true
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,18 +14,20 @@ import 'features/product_catalog/domain/usecases/get_products_usecase.dart';
 import 'features/product_catalog/presentation/state_bloc/product_bloc.dart';
 import 'features/product_catalog/presentation/state_bloc/product_event.dart';
 import 'features/product_catalog/presentation/state_bloc/cart_bloc.dart';
-import 'features/product_catalog/presentation/pages/home_page.dart';
+import 'features/product_catalog/presentation/pages/bloc/home_page.dart'
+    as bloc_ui;
 
 // Engine B: Riverpod
 import 'features/product_catalog/presentation/state_riverpod/product_riverpod_notifier.dart';
-import 'features/product_catalog/presentation/pages/home_page_riverpod.dart';
+import 'features/product_catalog/presentation/pages/riverpod/home_page.dart'
+    as riverpod_ui;
 
 // ============================================================================
 // SAKELAR PENGUJIAN (BENCHMARKING EXPERIMENT)
 // - Ubah jadi 'false' : Menjalankan Engine BLoC (Katalog Hijau)
 // - Ubah jadi 'true'  : Menjalankan Engine Riverpod (Katalog Biru)
 // ============================================================================
-const bool useRiverpod = true;
+const bool useRiverpod = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -83,7 +85,7 @@ class PasarLokalCleanApp extends StatelessWidget {
               seedColor: const Color(0xFF2563EB),
             ),
           ),
-          home: const HomePageRiverpod(),
+          home: const riverpod_ui.HomePage(),
         ),
       );
     }
@@ -104,7 +106,7 @@ class PasarLokalCleanApp extends StatelessWidget {
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF059669)),
         ),
-        home: const HomePage(),
+        home: const bloc_ui.HomePage(),
       ),
     );
   }

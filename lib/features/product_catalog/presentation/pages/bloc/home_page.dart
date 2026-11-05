@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../state_bloc/product_bloc.dart';
-import '../state_bloc/product_event.dart';
-import '../state_bloc/product_state.dart';
-import '../state_bloc/cart_bloc.dart';
-import '../widgets/product_card_widget.dart';
-import '../widgets/category_chip_widget.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../state_bloc/product_bloc.dart';
+import '../../state_bloc/product_event.dart';
+import '../../state_bloc/product_state.dart';
+import '../../state_bloc/cart_bloc.dart';
+import '../../widgets/product_card_widget.dart';
+import '../../widgets/category_chip_widget.dart';
+import '../../../../../core/constants/app_colors.dart';
 import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text('🌱 ', style: TextStyle(fontSize: 20)),
             Text(
-              'PasarLokal',
+              'PasarLokal (BLoC)',
               style: TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.bold,
@@ -47,7 +47,10 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.center,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Color(0xFF334155)),
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Color(0xFF334155),
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -85,7 +88,9 @@ class _HomePageState extends State<HomePage> {
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {
-            return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            );
           } else if (state is ProductLoaded) {
             final List<String> dynamicCategories = [
               'Semua',
@@ -108,12 +113,21 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: TextField(
                       onChanged: (query) {
-                        context.read<ProductBloc>().add(SearchProductEvent(query));
+                        context.read<ProductBloc>().add(
+                          SearchProductEvent(query),
+                        );
                       },
                       decoration: const InputDecoration(
                         hintText: 'Cari produk...',
-                        hintStyle: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
-                        prefixIcon: Icon(Icons.search, size: 20, color: Color(0xFF94A3B8)),
+                        hintStyle: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF94A3B8),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          size: 20,
+                          color: Color(0xFF94A3B8),
+                        ),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                       ),
@@ -126,7 +140,10 @@ class _HomePageState extends State<HomePage> {
                   height: 48,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
                     itemCount: dynamicCategories.length,
                     itemBuilder: (context, index) {
                       final cat = dynamicCategories[index];
@@ -137,7 +154,9 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             selectedCategory = cat;
                           });
-                          context.read<ProductBloc>().add(FilterCategoryEvent(cat));
+                          context.read<ProductBloc>().add(
+                            FilterCategoryEvent(cat),
+                          );
                         },
                       );
                     },
@@ -148,20 +167,28 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: displayList.isEmpty
                       ? const Center(
-                          child: Text('Tidak ada produk untuk kategori ini',
-                              style: TextStyle(color: Colors.grey)),
+                          child: Text(
+                            'Tidak ada produk untuk kategori ini',
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         )
                       : GridView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.65,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
                           ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.65,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                              ),
                           itemCount: displayList.length,
                           itemBuilder: (context, index) {
-                            return ProductCardWidget(product: displayList[index]);
+                            return ProductCardWidget(
+                              product: displayList[index],
+                            );
                           },
                         ),
                 ),
@@ -189,9 +216,18 @@ class _HomePageState extends State<HomePage> {
         unselectedFontSize: 11,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.explore_outlined), label: 'Explore'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt_long_outlined), label: 'Pesanan'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profil'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore_outlined),
+            label: 'Explore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long_outlined),
+            label: 'Pesanan',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profil',
+          ),
         ],
       ),
     );

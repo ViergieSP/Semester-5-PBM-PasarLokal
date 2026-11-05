@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../state_bloc/cart_bloc.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../state_bloc/cart_bloc.dart';
+import '../../../../../core/constants/app_colors.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final currency = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -64,11 +68,17 @@ class CartPage extends StatelessWidget {
                                     item.product.title,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
                                   ),
                                   Text(
                                     currency.format(item.product.price),
-                                    style: const TextStyle(color: AppColors.primary, fontSize: 12),
+                                    style: const TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -76,20 +86,35 @@ class CartPage extends StatelessWidget {
                             Row(
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.remove_circle_outline, size: 20),
+                                  icon: const Icon(
+                                    Icons.remove_circle_outline,
+                                    size: 20,
+                                  ),
                                   onPressed: () {
-                                    context.read<CartBloc>().add(RemoveOrDecrementCartEvent(item.product));
+                                    context.read<CartBloc>().add(
+                                      RemoveOrDecrementCartEvent(item.product),
+                                    );
                                   },
                                 ),
-                                Text('${item.quantity}', style: const TextStyle(fontWeight: FontWeight.bold)),
+                                Text(
+                                  '${item.quantity}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 IconButton(
-                                  icon: const Icon(Icons.add_circle_outline, size: 20),
+                                  icon: const Icon(
+                                    Icons.add_circle_outline,
+                                    size: 20,
+                                  ),
                                   onPressed: () {
-                                    context.read<CartBloc>().add(AddToCartEvent(item.product));
+                                    context.read<CartBloc>().add(
+                                      AddToCartEvent(item.product),
+                                    );
                                   },
                                 ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -108,26 +133,48 @@ class CartPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Subtotal Produk', style: TextStyle(fontSize: 12, color: Colors.black54)),
-                        Text(currency.format(state.subtotalPrice), style: const TextStyle(fontSize: 12)),
+                        const Text(
+                          'Subtotal Produk',
+                          style: TextStyle(fontSize: 12, color: Colors.black54),
+                        ),
+                        Text(
+                          currency.format(state.subtotalPrice),
+                          style: const TextStyle(fontSize: 12),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Biaya Layanan UMKM', style: TextStyle(fontSize: 12, color: Colors.black54)),
-                        Text(currency.format(biayaLayanan), style: const TextStyle(fontSize: 12)),
+                        const Text(
+                          'Biaya Layanan UMKM',
+                          style: TextStyle(fontSize: 12, color: Colors.black54),
+                        ),
+                        Text(
+                          currency.format(biayaLayanan),
+                          style: const TextStyle(fontSize: 12),
+                        ),
                       ],
                     ),
                     const Divider(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Total Tagihan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                        const Text(
+                          'Total Tagihan',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
                         Text(
                           currency.format(totalBayar),
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.primary),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: AppColors.primary,
+                          ),
                         ),
                       ],
                     ),
@@ -138,22 +185,29 @@ class CartPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(vertical: 12),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Pesanan Berhasil Diproses!')),
+                            const SnackBar(
+                              content: Text('Pesanan Berhasil Diproses!'),
+                            ),
                           );
                         },
                         child: Text(
                           'Checkout (${currency.format(totalBayar)})',
-                          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           );
         },

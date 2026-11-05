@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../../domain/entities/product_entity.dart';
-import '../state_bloc/cart_bloc.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../../domain/entities/product_entity.dart';
+import '../../state_bloc/cart_bloc.dart';
+import '../../../../../core/constants/app_colors.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductEntity product;
@@ -11,7 +11,11 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currency = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +52,11 @@ class ProductDetailPage extends StatelessWidget {
               ),
               child: const Text(
                 'UMKM Terverifikasi',
-                style: TextStyle(color: Color(0xFF065F46), fontSize: 11, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Color(0xFF065F46),
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -59,14 +67,25 @@ class ProductDetailPage extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               currency.format(product.price),
-              style: const TextStyle(fontSize: 18, color: AppColors.primary, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 18,
+                color: AppColors.primary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const Divider(height: 24),
-            const Text('Deskripsi Produk', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+            const Text(
+              'Deskripsi Produk',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
             const SizedBox(height: 6),
             Text(
               product.description,
-              style: const TextStyle(color: Colors.black54, height: 1.5, fontSize: 13),
+              style: const TextStyle(
+                color: Colors.black54,
+                height: 1.5,
+                fontSize: 13,
+              ),
             ),
           ],
         ),
@@ -75,21 +94,31 @@ class ProductDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
+          ],
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             padding: const EdgeInsets.symmetric(vertical: 14),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
           ),
           onPressed: () {
             context.read<CartBloc>().add(AddToCartEvent(product));
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Berhasil masuk keranjang!'), duration: Duration(milliseconds: 700)),
+              const SnackBar(
+                content: Text('Berhasil masuk keranjang!'),
+                duration: Duration(milliseconds: 700),
+              ),
             );
           },
-          child: const Text('+ Tambah ke Keranjang', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+          child: const Text(
+            '+ Tambah ke Keranjang',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
         ),
       ),
     );

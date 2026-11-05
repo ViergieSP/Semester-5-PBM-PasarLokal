@@ -9,5 +9,6 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure([String message = 'Terjadi kesalahan pada server']) : super(message);
+  const ServerFailure([String message = 'Terjadi kesalahan pada server'])
+    : super(message);
 }

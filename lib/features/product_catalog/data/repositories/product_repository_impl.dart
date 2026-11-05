@@ -20,7 +20,7 @@ class ProductRepositoryImpl implements ProductRepository {
       return remoteProducts;
     } catch (e) {
       final localProducts = await localDataSource.getLastCachedProducts();
-      
+
       if (localProducts.isNotEmpty) {
         return localProducts;
       } else {

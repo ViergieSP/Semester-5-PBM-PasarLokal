@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../state_bloc/cart_bloc.dart';
-import '../pages/product_detail_page.dart';
+import '../pages/bloc/product_detail_page.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final ProductEntity product;
@@ -12,7 +12,11 @@ class ProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currency = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+    final currency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
 
     return InkWell(
       onTap: () {
@@ -63,7 +67,10 @@ class ProductCardWidget extends StatelessWidget {
                   top: 6,
                   left: 6,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFD1FAE5),
                       borderRadius: BorderRadius.circular(4),
@@ -132,7 +139,11 @@ class ProductCardWidget extends StatelessWidget {
                 },
                 child: const Text(
                   '+ Keranjang',
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
