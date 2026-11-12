@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../state_riverpod/product_riverpod_notifier.dart';
 import '../../widgets/category_chip_widget.dart';
+import '../../../../../core/utils/benchmark_bot.dart';
 import 'product_detail_page.dart';
 import 'cart_page.dart';
 
@@ -14,6 +15,8 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+
   int _navIndex = 0;
 
   @override
@@ -176,6 +179,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           child: Text('Tidak ada produk untuk kategori ini'),
                         )
                       : GridView.builder(
+                          controller: _scrollController,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 14,
                             vertical: 8,
@@ -303,7 +307,34 @@ class _HomePageState extends ConsumerState<HomePage> {
               ],
             ),
 
-      // 4. Bottom Navigation Bar
+      // 4. Floating Action Button untuk Uji Otomatis
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.orange.shade800,
+        icon: const Icon(Icons.smart_toy_outlined, color: Colors.white),
+        label: const Text(
+          'Uji Otomatis',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        onPressed: () {
+          BenchmarkBot.runAutomatedTest(
+            context: context,
+            scrollController: _scrollController,
+            onFilterCategory: (category) {
+              ref
+                  .read(productRiverpodProvider.notifier)
+                  .filterCategory(category);
+            },
+            onOpenCart: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CartPage()),
+              );
+            },
+          );
+        },
+      ),
+
+      // 5. Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _navIndex,
         onTap: (index) {

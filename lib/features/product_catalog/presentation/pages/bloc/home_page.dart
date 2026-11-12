@@ -7,6 +7,7 @@ import '../../state_bloc/cart_bloc.dart';
 import '../../widgets/product_card_widget.dart';
 import '../../widgets/category_chip_widget.dart';
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/utils/benchmark_bot.dart';
 import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+
   String selectedCategory = 'Semua';
   int _navIndex = 0;
 
@@ -173,6 +176,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                       : GridView.builder(
+                          controller: _scrollController,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 14,
                             vertical: 8,
@@ -201,7 +205,32 @@ class _HomePageState extends State<HomePage> {
         },
       ),
 
-      // 4. Navigasi Bawah
+      // 4. Tombol Uji Otomatis
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Colors.orange.shade800,
+        icon: const Icon(Icons.smart_toy_outlined, color: Colors.white),
+        label: const Text(
+          'Uji Otomatis',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        onPressed: () {
+          BenchmarkBot.runAutomatedTest(
+            context: context,
+            scrollController: _scrollController,
+            onFilterCategory: (category) {
+              context.read<ProductBloc>().add(FilterCategoryEvent(category));
+            },
+            onOpenCart: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const CartPage()),
+              );
+            },
+          );
+        },
+      ),
+
+      // 5. Navigasi Bawah
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _navIndex,
         onTap: (index) {
